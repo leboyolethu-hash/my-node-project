@@ -1,26 +1,24 @@
-const http = require('http')
-const fs = require('fs')
+const http = require('http');
+const fs = require('fs');
+
 const port = process.env.PORT || 8080;
 
 const server = http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/html' })
-    fs.readFile('netlify-file (1).html', function (error, data) {
+    res.writeHead(200, { 'Content-Type': 'text/html' });
+    fs.readFile('index.html', function (error, data) {
         if (error) {
-            res.writeHead(404)
-            res.write('Error: File Not Found')
+            res.write('Hello Node Server');
         } else {
-            res.write(data)
+            res.write(data);
         }
-        res.end()
-    })
-
-    res.end()
-})
+        res.end();
+    });
+});
 
 server.listen(port, '0.0.0.0', function (error) {
     if (error) {
-        console.log('Something went wrong', error)
+        console.log('Something went wrong', error);
     } else {
-        console.log('Server is listening on port ' + port)
+        console.log('Server is listening on port ' + port);
     }
-})
+});
