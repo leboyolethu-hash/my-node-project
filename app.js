@@ -1,24 +1,17 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
+const path = require('path');
+const app = express();
 
-const port = process.env.PORT || 8080;
+// Serve static files (HTML, CSS, JS) from the root directory
+app.use(express.static(__dirname));
 
-const server = http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/html' });
-    fs.readFile('index.html', function (error, data) {
-        if (error) {
-            res.write('Hello Node Server');
-        } else {
-            res.write(data);
-        }
-        res.end();
-    });
+// Route for the main dashboard page
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-server.listen(port, '0.0.0.0', function (error) {
-    if (error) {
-        console.log('Something went wrong', error);
-    } else {
-        console.log('Server is listening on port ' + port);
-    }
+// Use Render's dynamic port or fallback to 3000 locally
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
